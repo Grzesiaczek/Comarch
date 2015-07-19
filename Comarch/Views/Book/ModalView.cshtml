@@ -1,0 +1,54 @@
+﻿@model Comarch.Models.Book
+
+<script type="text/javascript">
+    $(function () {
+        jQuery.validator.unobtrusive.parse();
+        jQuery.validator.unobtrusive.parse("#modalForm");
+    });
+</script>
+
+@using (Ajax.BeginForm("GetBooks", null, new AjaxOptions() { UpdateTargetId = "dataView" }, new { @id = "modalForm" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    <br />
+
+    <div class="form-line-validated">
+        @Html.LabelFor(model => model.Title, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Title, new { @class = "form-field" })
+        @Html.ValidationMessageFor(model => model.Title, null, new { @class = "form-validation" })
+    </div>
+
+    <div class="form-line-area">
+        @Html.LabelFor(model => model.Description, new { @class = "form-label" })
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-field", @rows = "4" })
+        @Html.ValidationMessageFor(model => model.Description, null, new { @class = "form-area-validation" })
+    </div>
+
+    <div class="form-line-validated">
+        @Html.LabelFor(model => model.Author, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Author, new { @class = "form-field" })
+        @Html.ValidationMessageFor(model => model.Author, null, new { @class = "form-validation" })
+     </div>
+
+    <div class="form-line-validated">
+        @Html.LabelFor(model => model.Year, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Year, new { @class = "form-field" })
+        @Html.ValidationMessageFor(model => model.Year, null, new { @class = "form-validation" })
+    </div>
+
+    <div class="form-line-droplist">
+        @Html.LabelFor(model => model.Cover.Data, new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.CoverId, new SelectList(ViewBag.Covers, "Id", "Data"), new { @class = "form-droplist" })
+    </div>
+
+    <div class="form-line-droplist">
+        @Html.LabelFor(model => model.Genre.Data, new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.GenreId, new SelectList(ViewBag.Genres, "Id", "Data"), new { @class = "form-droplist" })
+    </div>
+
+    <div style="position: relative; top: 20px">
+        <input type=submit id="submitter" onclick="submitForm()" style="position: absolute; left: 120px" value="Zapisz" />
+        <button type="button" onclick="closeWindow()" style="position:absolute; right: 120px">Anuluj</button>
+    </div>
+    
+}

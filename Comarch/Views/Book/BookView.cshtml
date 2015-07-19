@@ -1,0 +1,14 @@
+﻿@model Comarch.Models.Book
+
+<div class="property">@Html.LabelFor(model => model.Title, new { @class = "item-label" })<span class="item-field">@Model.Title</span> </div>
+<div class="property">@Html.LabelFor(model => model.Description, new { @class = "item-label" })<span class="item-field">@Model.Description</span> </div>
+<div class="property">@Html.LabelFor(model => model.Author, new { @class = "item-label" })<span class="item-field">@Model.Author</span></div>
+<div class="property">@Html.LabelFor(model => model.Year, new { @class = "item-label" })<span class="item-field">@Model.Year</span></div>
+<div class="property">@Html.LabelFor(model => model.Cover.Data, new { @class = "item-label" })<span class="item-field">@Model.Cover.Data</span></div>
+<div class="property">@Html.LabelFor(model => model.Genre.Data, new { @class = "item-label" })<span class="item-field">@Model.Genre.Data</span></div>
+
+<div class="property">
+    <button onclick="edit(@Model.Id)" style="position: absolute; left: 32px">Edytuj</button>
+    <button onclick="del(@Model.Id)" style="position: absolute; left: 112px">Usuń</button>
+</div>
+<br />

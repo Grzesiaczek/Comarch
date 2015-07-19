@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Lista książek";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.4.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/scripts.js")"></script>
+    <link rel="stylesheet" href="@Url.Content("~/Content/jquery-ui.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/style.css")">
+
+    <script type="text/javascript">
+        $(function () {
+            $("#dialog-edit").dialog({
+                title: 'Create Book',
+                autoOpen: false,
+                resizable: false,
+                height: 560,
+                width: 480,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+            });
+        })
+
+        var id;
+
+        function changeFilter() {
+            if (!$("#auto").is(':checked'))
+                return;
+
+            id = window.clearTimeout(id);
+            id = window.setTimeout(filter, 3000);
+        }
+
+        function submitForm() {
+            if ($("#modalForm").valid()) {
+                closeWindow();
+            }
+        }
+
+        function closeWindow() {
+            $("#dialog-edit").dialog('close');
+        }
+
+
+        function del(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete")',
+                dataType: 'html',
+                data: 'id=' + id,
+                success: function (data) {
+                    $('#dataView').html(data);
+                }
+            });
+        }
+
+        function edit(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Update")',
+                dataType: 'html',
+                data: 'id=' + id,
+                success: function (data) {
+                    $('#dialog-edit').html(data);
+                    $("#dialog-edit").dialog('open');
+                    return false;
+                }
+            });
+        }
+
+        function create() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create")',
+                dataType: 'html',
+                success: function (data) {
+                    $('#dialog-edit').html(data);
+                    $("#dialog-edit").dialog('open');
+                }
+            });
+        }
+
+        function filter() {
+            var author = 'author=' + $('#author').val();
+            var title = 'title=' + $('#title').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("FilterList")',
+                dataType: 'html',
+                data: author + '&' + title,
+                success: function (data) {
+                    $('#dataView').html(data);
+                    return false;
+                }
+            });
+        }     
+    </script>
+</head>
+
+<body>
+    <div style="margin-left: 20px; margin-top: 8px">
+        <div><h2>Lista książek</h2><button type="button" onclick="create()">Dodaj nową</button></div>
+        <br />
+        <span>Tytuł: <input type="text" id="title" oninput="changeFilter()"></span>
+        <span>Autor: <input type="text" id="author" oninput="changeFilter()"></span>
+        <button type="button" onclick="filter()">Filtruj</button>
+        <span><input type="checkbox" onchange="changeFilter()" id="auto" value="Auto" />Auto</span> 
+    </div>
+    <br />
+
+    <div id="dataView">
+        @Html.Action("GetBooks")
+    </div>
+
+    <div id="dialog-edit" style="display: none">
+        @Html.Action("Create")
+    </div>
+
+</body>
+</html>

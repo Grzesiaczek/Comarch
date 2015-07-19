@@ -1,0 +1,75 @@
+﻿body {
+    background-color: beige;
+}
+
+.form-label {
+    width: 120px;
+}
+
+.form-field {
+    position: absolute;
+    left: 120px;
+    width: 320px;
+}
+
+.form-droplist {
+    position: absolute;
+    left: 120px;
+    width: 100px;
+}
+
+.form-line-area {
+    position: relative;
+    display: block;
+    height: 120px;
+}
+
+.form-line-validated {
+    position: relative;
+    display: block;
+    height: 60px;
+}
+
+.form-line-droplist {
+    position: relative;
+    display: block;
+    height: 40px;
+}
+
+.form-validation {
+    position: absolute;
+    left: 120px;
+    top: 32px;
+    color: indianred;
+    font-size: 0.7em;
+}
+
+.form-area-validation {
+    position: absolute;
+    left: 120px;
+    top: 94px;
+    color: indianred;
+    font-size: 0.7em;
+}
+
+.item-label {
+    font-weight: bold;
+    width: 120px;
+    margin-left: 20px;
+}
+
+.item-field {
+    position: absolute;
+    left: 140px;
+    width: 480px;
+}
+
+.property {
+    display: block;
+    padding-top: 5px;
+    width: 800px;
+}
+
+.item {
+    display: block;
+}
